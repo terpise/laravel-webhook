@@ -1,0 +1,68 @@
+{
+    "name": "terpise/laravel-webhook",
+    "description": "Laravel webhook",
+    "keywords": [
+        "terpise",
+        "laravel",
+        "laravel-webhook"
+    ],
+    "homepage": "https://github.com/terpise/laravel-webhook",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Terpise",
+            "email": "anhnt.jr@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "illuminate/contracts": "^9.0"
+    },
+    "require-dev": {
+        "nesbot/carbon": "^2.68.1",
+        "nunomaduro/collision": "6.0",
+        "orchestra/testbench": "^7.25",
+        "pestphp/pest": "^1.22",
+        "pestphp/pest-plugin-laravel": "1.4",
+        "phpstan/phpstan": "^1.4.7",
+        "phpunit/phpunit": "^9.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Terpise\\Webhook\\": "src/",
+            "Terpise\\Webhook\\Database\\Factories\\": "database/factories/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Terpise\\Webhook\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": "@php ./vendor/bin/testbench package:discover --ansi",
+        "analyse": "vendor/bin/phpstan analyse",
+        "test": "vendor/bin/pest",
+        "test-coverage": "vendor/bin/pest --coverage",
+        "format": "vendor/bin/pint"
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true,
+            "phpstan/extension-installer": true
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Terpise\\Webhook\\WebhookServiceProvider"
+            ],
+            "aliases": {
+                "Webhook": "Terpise\\Webhook\\Facades\\Webhook"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
