@@ -98,6 +98,7 @@ class WebhookClientRepository
         return WebhookClient::where("id", $clientId)->where('secret', $clientSecret)->update([
             "verify_token" => null,
             "callback_url" => null,
+            "subscribe" => 0,
         ]);
     }
 }
