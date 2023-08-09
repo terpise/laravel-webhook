@@ -2,6 +2,7 @@
 
 namespace Terpise\Webhook;
 
+use Terpise\Webhook\Jobs\WebhookReadEvent;
 use Terpise\Webhook\Models\WebhookClient;
 use Terpise\Webhook\Models\WebhookEvent;
 use Terpise\Webhook\Models\WebhookEventClient;
@@ -25,20 +26,37 @@ class WebhookService
             ];
         }
         WebhookEventClient::insert($items);
+        WebhookReadEvent::dispatch();
     }
 
-    public static function events($limit = null)
+    public static function hasEvent()
     {
-        if (empty($limit)) {
-            $limit = config('webhook.limit', 30);
+        try {
+            return WebhookEventClient::where('status', WebhookEventClient::STATUS_INIT)->exists();
+        } catch (\Exception $e) {
+            return false;
         }
-        return WebhookEventClient::query()
-            ->where('status', 0)
-            ->orderBy('id')
-            ->select(['id'])
-            ->limit($limit)
-            ->get();
+    }
 
+    public static function readEvents()
+    {
+        try {
+            $query = WebhookEventClient::query()
+                ->where('status', WebhookEventClient::STATUS_INIT)
+                ->orderBy('id')
+                ->select(['id'])
+                ->limit(100);
+            $rows = $query->get();
+            if (empty($rows)) {
+                return [];
+            }
+            $query->update([
+                'status' => WebhookEventClient::STATUS_READ,
+            ]);
+            return $rows;
+        } catch (\Exception $e) {
+            return [];
+        }
     }
 
     public static function sendEvent($id)
@@ -59,11 +77,11 @@ class WebhookService
 
         if ($response->successful()) {
             $webhookEventClient->update([
-                'status' => 1,
+                'status' => 2,
             ]);
         } else {
             $webhookEventClient->update([
-                'status' => 2,
+                'status' => 3,
             ]);
         }
     }

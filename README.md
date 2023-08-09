@@ -38,15 +38,8 @@ You can make client with:
 php artisan webhook:make
 ```
 
-Active webhook
-```
-$schedule->command('webhook:run')->everyMinute();
-```
 ```bash
 php artisan queue:work
-```
-```bash
-php artisan schedule:work
 ```
 
 ## Client

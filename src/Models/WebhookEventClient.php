@@ -13,6 +13,11 @@ class WebhookEventClient extends Model
 
     protected $guarded = [];
 
+    const STATUS_INIT = 0;
+    const STATUS_READ = 1;
+    const STATUS_DONE = 2;
+    const STATUS_FAIL = 3;
+
     public function webhookClient()
     {
         return $this->belongsTo(WebhookClient::class, 'webhook_client_id', 'id');

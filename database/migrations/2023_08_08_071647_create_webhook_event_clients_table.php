@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('webhook_event_id')->index();
             $table->unsignedBigInteger('webhook_client_id')->index();
-            $table->tinyInteger('status')->default(0);
+            $table->tinyInteger('status')->default(0)
+                ->comment('0 - init, 1 - read, 2 - done, 3 - fail');
             $table->timestamps();
         });
     }

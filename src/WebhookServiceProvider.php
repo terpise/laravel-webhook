@@ -79,7 +79,6 @@ class WebhookServiceProvider extends ServiceProvider
             $this->commands([
                 WebhookTestCommand::class,
                 WebhookMakeCommand::class,
-                WebhookRunCommand::class,
             ]);
         }
     }
