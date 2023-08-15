@@ -77,7 +77,6 @@ class WebhookServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
-                WebhookTestCommand::class,
                 WebhookMakeCommand::class,
             ]);
         }
