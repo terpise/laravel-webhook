@@ -89,10 +89,6 @@ $  curl -X POST https://www.domain.com/webhooks/unsubscribe \
 
 ## Use
 
-```bash
-php artisan webhook:test
-```
-
 ```php
 WebhookEvent::dispatch('create', [
     "event_time" => now(),
