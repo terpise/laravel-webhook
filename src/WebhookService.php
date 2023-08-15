@@ -69,7 +69,7 @@ class WebhookService
 
         $response = Http::withHeaders([
             'verity-token' => $webhookClient->verify_token,
-        ])->post($webhookClient->callback_url, son_decode($webhookEvent->data));
+        ])->post($webhookClient->callback_url, json_decode($webhookEvent->data));
 
         if ($response->successful()) {
             $webhookEventClient->update([
