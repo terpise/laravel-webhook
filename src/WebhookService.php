@@ -72,7 +72,7 @@ class WebhookService
             'verity-token' => $webhookClient->verify_token,
         ])->post($webhookClient->callback_url, [
             'event' => $webhookEvent->type,
-            'data' => $webhookEvent->data,
+            'data' => json_decode($webhookEvent->data),
         ]);
 
         if ($response->successful()) {
