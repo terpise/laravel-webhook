@@ -96,7 +96,8 @@ php artisan webhook:test
 ```php
 WebhookEvent::dispatch('create', [
     "event_time" => now(),
-    "object_id" => random_int(1, 100000),
+    "event_type" => 'create',
+    "object_id" => 888888,
     "object_type" => "users",
 ]);
 ```

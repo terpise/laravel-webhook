@@ -13,7 +13,6 @@ class WebhookEvent implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    public $type;
     public $data;
 
     /**
@@ -21,9 +20,8 @@ class WebhookEvent implements ShouldQueue
      *
      * @return void
      */
-    public function __construct(string $type, array $data)
+    public function __construct($data)
     {
-        $this->type = $type;
         $this->data = $data;
     }
 
@@ -34,6 +32,6 @@ class WebhookEvent implements ShouldQueue
      */
     public function handle()
     {
-        WebhookService::event($this->data, $this->type);
+        WebhookService::event($this->data);
     }
 }

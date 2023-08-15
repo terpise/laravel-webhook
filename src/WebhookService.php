@@ -10,12 +10,11 @@ use Illuminate\Support\Facades\Http;
 
 class WebhookService
 {
-    public static function event($data, $type)
+    public static function event($data)
     {
         $webhookEvent = WebhookEvent::create([
             'data' => json_encode($data),
-            'type' => $type
-        ]);;
+        ]);
         $webhookClientSubscribes = WebhookClient::where("subscribe", 1)->get();
 
         $items = [];
@@ -70,10 +69,7 @@ class WebhookService
 
         $response = Http::withHeaders([
             'verity-token' => $webhookClient->verify_token,
-        ])->post($webhookClient->callback_url, [
-            'event' => $webhookEvent->type,
-            'data' => json_decode($webhookEvent->data),
-        ]);
+        ])->post($webhookClient->callback_url, son_decode($webhookEvent->data));
 
         if ($response->successful()) {
             $webhookEventClient->update([
