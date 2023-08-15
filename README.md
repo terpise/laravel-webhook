@@ -87,14 +87,18 @@ $  curl -X POST https://www.domain.com/webhooks/unsubscribe \
 ```
 
 
-## Testing
+## Use
 
 ```bash
 php artisan webhook:test
 ```
 
-```bash
-composer test
+```php
+WebhookEvent::dispatch('create', [
+    "event_time" => now(),
+    "object_id" => random_int(1, 100000),
+    "object_type" => "users",
+]);
 ```
 
 ## Changelog
