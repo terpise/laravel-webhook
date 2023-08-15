@@ -90,7 +90,7 @@ $  curl -X POST https://www.domain.com/webhooks/unsubscribe \
 ## Use
 
 ```php
-WebhookEvent::dispatch('create', [
+WebhookEvent::dispatch([
     "event_time" => now(),
     "event_type" => 'create',
     "object_id" => 888888,
